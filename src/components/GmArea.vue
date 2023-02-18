@@ -1,6 +1,23 @@
 <template>
+
   <v-row justify="center" class="mt-16">
-    <div :style="{ gridTemplateColumns: `repeat(${props.sumCell}, ${sizeCell}px)`, gridTemplateRows: `repeat(${props.sumCell}, ${sizeCell}px)` }" class="game-area_wrapper">
+    <div :style="{ gridTemplateColumns: `repeat(${props.sumCell}, ${sizeCell}px)`, gridTemplateRows: `60px repeat(${props.sumCell}, ${sizeCell}px)` }" class="game-area_wrapper">
+
+      <div :style="{ gridColumnEnd: `${props.sumCell + 1}` }" class="statistics">
+        <div class="statistics_element">
+          <v-icon icon="mdi-timer-outline" size="x-large"></v-icon>
+          <div class="statistics_text">10 min.</div>
+        </div>
+        <div class="statistics_element">
+          <v-icon icon="mdi-bomb-off" size="large"></v-icon>
+          <div class="statistics_text">6</div>
+        </div>
+        <div class="statistics_element">
+          <v-icon icon="mdi-flag-triangle" size="large"></v-icon>
+          <div class="statistics_text">10</div>
+        </div>
+      </div>
+
       <div v-for="cell of field" :key="cell" :style="{ fontSize: `${sizeNum}px` }" class="game-area_element">
         {{ cell }}
       </div>
@@ -42,4 +59,40 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 }
+
+.statistics {
+  height: 40px;
+  grid-column-start: 1;
+  align-self: end;
+  justify-self: end;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.statistics_element {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.statistics_element:first-child {
+  flex-grow: 1;
+  margin-left: 0;
+  font-size: 18px;
+  align-items: start;
+}
+
+.statistics_element:first-child .statistics_text {
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.7;
+  margin-left: 8px;
+}
+
+.statistics_text {
+  margin-left: 5px;
+  font-size: 20px;
+}
+
 </style>
