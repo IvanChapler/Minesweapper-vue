@@ -11,10 +11,6 @@ import {onMounted, ref, defineProps, watch} from "vue";
 const time = ref(0)
 const props = defineProps(['timeAmount'])
 
-watch(time, () => {
-  console.log(time.value)
-})
-
 onMounted(() => {
   time.value = props.timeAmount
 
