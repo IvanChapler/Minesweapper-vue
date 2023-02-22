@@ -1,16 +1,29 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import AddHeader from "./components/AddHeader.vue";
-import GmArea from "./components/GmArea.vue"
+import GmArea from "./components/GmArea.vue";
+import RestartGameBtn from "./components/RestartGameBtn.vue";
+import QuitGameBtn from "./components/QuitGameBtn.vue";
 
 const sumCell = ref(0);
 const isGameStart = ref(false);
+const isGameRestart = ref(true);
 const timeAmount = ref(0);
 
 function startGame (num) {
   sumCell.value = num
   isGameStart.value = true
 }
+
+function restartGame () {
+  isGameRestart.value = false
+  setTimeout(() => isGameRestart.value = true, 0)
+}
+
+function quitGame () {
+  isGameStart.value = false
+}
+
 </script>
 
 <template>
@@ -31,13 +44,36 @@ function startGame (num) {
       </div>
     </section>
 
-    <gm-area v-if="isGameStart" :sumCell="sumCell" :timeAmount="timeAmount"/>
+    <div class="btn-restart-quit-size_wrapper">
+      <restart-game-btn @click="restartGame" v-if="isGameStart"/>
+      <quit-game-btn @click="quitGame" v-if="isGameStart"/>
+    </div>
+
+    <div v-if="isGameStart">
+      <gm-area v-if="isGameRestart" :sumCell="sumCell" :timeAmount="timeAmount"/>
+    </div>
   </v-container>
 </template>
 
 <style scoped>
 @import "../settings.scss";
 
+.btn-restart-quit-size {
+  height: 56px;
+  width: 56px;
+  font-size: 22px;
+  padding: 0;
+  margin-top: 15px;
+}
+.btn-restart-quit-size:first-child {
+  margin-top: 0;
+}
+.btn-restart-quit-size_wrapper {
+  position: absolute;
+  top: 122px;
+  display: flex;
+  flex-direction: column;
+}
 .subtitle {
   text-transform: uppercase;
   font-size: 16px;

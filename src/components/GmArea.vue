@@ -3,7 +3,7 @@
     <div :style="{ gridTemplateColumns: `repeat(${props.sumCell}, ${sizeCell}px)`, gridTemplateRows: `60px repeat(${props.sumCell}, ${sizeCell}px)` }" class="game-area_wrapper">
 
       <div :style="{ gridColumnEnd: `${props.sumCell + 1}` }" class="statistics">
-        <add-timer :timeAmount="props.timeAmount" class="statistics_element" style="margin-left: 0"/>
+        <add-timer @add-time="calculateTime" :timeAmount="props.timeAmount" class="statistics_element" style="margin-left: 0"/>
         <div class="statistics_element">
           <v-icon icon="mdi-bomb" size="large"></v-icon>
           <div class="statistics_text">{{ sumCell }}</div>
@@ -36,6 +36,8 @@
         </div>
       </div>
 
+      <div class="buttons-exit-restart" :style="{ gridColumnEnd: props.sumCell + 1 }">
+      </div>
     </div>
   </v-row>
 </template>
@@ -43,12 +45,13 @@
 <script setup>
 import {ref, onMounted, computed, defineProps, reactive, watch, onUpdated} from "vue";
 import { createField, Bomb } from "./gameAlgorhitm.js";
-import AddTimer from "./AddTimer.vue"
+import AddTimer from "./AddTimer.vue";
 
 const props = defineProps(['sumCell', 'timeAmount']);
 const field = ref(new Array(props.sumCell*props.sumCell));
 const isFirstOpenedField = ref(true);
 const flags = ref(props.sumCell);
+const time = ref(0);
 const mask = ref([]);
 const maskStates = reactive({
   transparent: '',
@@ -57,6 +60,10 @@ const maskStates = reactive({
   question: 'mdi-help',
 });
 
+
+function calculateTime(value) {
+  time.value = value
+}
 
 function loadField (i) {
   if (isFirstOpenedField.value === false) return
@@ -190,7 +197,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(8, 50px);
   grid-template-rows: repeat(8, 50px);
-  gap: 1px;
+  gap: 2px;
 }
 
 .game-area_element {
@@ -221,4 +228,10 @@ onMounted(() => {
   font-size: 20px;
 }
 
+.buttons-exit-restart {
+  margin: 25px 70px 30px;
+  display: flex;
+  grid-column-start: 1;
+  justify-content: space-around;
+}
 </style>

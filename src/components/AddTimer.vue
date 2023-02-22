@@ -6,16 +6,23 @@
 </template>
 
 <script setup>
-import {onMounted, ref, defineProps, watch} from "vue";
+import {onMounted, ref, defineProps, defineEmits} from "vue";
 
 const time = ref(0)
 const props = defineProps(['timeAmount'])
+const emit = defineEmits(['addTime'])
+
+function emitFunction (value) {
+  emit('addTime', value)
+}
 
 onMounted(() => {
   time.value = props.timeAmount
 
   const timerId = setInterval(() => {
     time.value -= 1
+
+    emitFunction(time.value)
 
     if (+time.value === 0) clearInterval(timerId)
   }, 60000)
