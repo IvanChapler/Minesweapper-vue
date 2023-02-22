@@ -8,5 +8,9 @@
 </script>
 
 <style scoped>
-
+.btn-restart-quit-size {
+  width: 54px;
+  height: 54px;
+  margin-top: 20px;
+}
 </style>
