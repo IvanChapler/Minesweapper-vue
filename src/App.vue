@@ -11,6 +11,18 @@ const isGameStart = ref(false);
 const isGameRestart = ref(true);
 const timeAmount = ref(0);
 const overlayVisible = ref(false);
+const gameResult = ref('')
+
+function defineLoseOrWin (result) {
+  if (result === 'lose') {
+    overlayVisible.value = true
+    gameResult.value = 'You lose('
+  }
+  if (result === 'win') {
+    overlayVisible.value = true
+    gameResult.value = 'You won!!!'
+  }
+}
 
 function startGame (num) {
   sumCell.value = num
@@ -20,7 +32,6 @@ function startGame (num) {
 function restartGame () {
   isGameRestart.value = false
   setTimeout(() => isGameRestart.value = true, 0)
-  console.log('worked!')
 }
 
 function quitGame () {
@@ -53,13 +64,17 @@ function quitGame () {
     </div>
 
     <div v-if="isGameStart">
-      <gm-area v-if="isGameRestart" :sumCell="sumCell" :timeAmount="timeAmount"/>
+      <gm-area v-if="isGameRestart" @result-game="defineLoseOrWin" :sumCell="sumCell" :timeAmount="timeAmount">
+        <template v-slot:overlay>
+          <game-over-overlay v-if="overlayVisible" :result="gameResult">
+            <restart-game-btn @click="restartGame(), overlayVisible = false"/>
+            <quit-game-btn @click="quitGame(), overlayVisible = false"/>
+          </game-over-overlay>
+        </template>
+      </gm-area>
     </div>
 
-    <game-over-overlay v-if="overlayVisible">
-      <restart-game-btn @click="restartGame(), overlayVisible = false"/>
-      <quit-game-btn @click="quitGame(), overlayVisible = false"/>
-    </game-over-overlay>
+
   </v-container>
 </template>
 

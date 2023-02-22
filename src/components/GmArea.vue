@@ -2,6 +2,8 @@
   <v-row justify="center" class="mt-16">
     <div :style="{ gridTemplateColumns: `repeat(${props.sumCell}, ${sizeCell}px)`, gridTemplateRows: `60px repeat(${props.sumCell}, ${sizeCell}px)` }" class="game-area_wrapper">
 
+      <slot name="overlay"></slot>
+
       <div :style="{ gridColumnEnd: `${props.sumCell + 1}` }" class="statistics">
         <add-timer @add-time="calculateTime" :timeAmount="props.timeAmount" class="statistics_element" style="margin-left: 0"/>
         <div class="statistics_element">
@@ -35,19 +37,18 @@
           </div>
         </div>
       </div>
-
-      <div class="buttons-exit-restart" :style="{ gridColumnEnd: props.sumCell + 1 }">
-      </div>
     </div>
   </v-row>
 </template>
 
 <script setup>
-import {ref, onMounted, computed, defineProps, reactive, watch, onUpdated} from "vue";
+import {ref, onMounted, computed, defineProps, defineEmits, reactive, watch, onUpdated } from "vue";
 import { createField, Bomb } from "./gameAlgorhitm.js";
 import AddTimer from "./AddTimer.vue";
+import GameOverOverlay from "./GameOverOverlay.vue";
 
 const props = defineProps(['sumCell', 'timeAmount']);
+const emit = defineEmits(['resultGame'])
 const field = ref(new Array(props.sumCell*props.sumCell));
 const isFirstOpenedField = ref(true);
 const flags = ref(props.sumCell);
@@ -61,8 +62,10 @@ const maskStates = reactive({
 });
 
 
-function calculateTime(value) {
-  time.value = value
+function calculateTime(emitValue) {
+  time.value = emitValue
+
+  if (emitValue === 0) lose()
 }
 
 function loadField (i) {
@@ -82,11 +85,11 @@ function lose() {
     }
   })
 
-  console.log('you lose')
+  emit('resultGame', 'lose')
 }
 
 function win() {
-  console.log('you win!!!')
+  emit('resultGame', 'win')
 }
 
 function checkWin () {
@@ -198,6 +201,7 @@ onMounted(() => {
   grid-template-columns: repeat(8, 50px);
   grid-template-rows: repeat(8, 50px);
   gap: 2px;
+  position: relative;
 }
 
 .game-area_element {
@@ -226,12 +230,5 @@ onMounted(() => {
 .statistics_text {
   margin-left: 5px;
   font-size: 20px;
-}
-
-.buttons-exit-restart {
-  margin: 25px 70px 30px;
-  display: flex;
-  grid-column-start: 1;
-  justify-content: space-around;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div class="overlay_modal">
-      result
+      {{ props.result }}
     </div>
     <div class="btns">
       <slot></slot>
@@ -9,7 +9,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps(['result'])
 </script>
 
 <style scoped>
@@ -26,20 +29,22 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.53);
+  justify-content: center;
+  background: rgba(69, 68, 68, 0.53);
+  z-index: 10;
 }
 .overlay_modal {
-  width: 400px;
-  height: 100px;
+  width: 250px;
+  min-height: 70px;
   background: #181818;
   border-radius: 10px;
-  border: 3px solid #535353;
+  border: 2px solid #535353;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 </style>
