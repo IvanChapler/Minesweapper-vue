@@ -183,11 +183,11 @@ function openCell (i, event) {
 }
 
 const sizeCell = computed(() => {
-  return props.sumCell !== 16 ? 400 / props.sumCell : 400 / props.sumCell * 2
+  return props.sumCell >= 16 ? props.sumCell >= 32 ? 400 / props.sumCell * 3 : 400 / props.sumCell * 2 : 400 / props.sumCell
 })
 
 const sizeNum = computed(() => {
-  return props.sumCell !== 16 ? 160 / props.sumCell : 160 / props.sumCell * 2
+  return props.sumCell >= 16 ? props.sumCell >= 16 ? 160 / props.sumCell * 3 :  160 / props.sumCell * 2 : 160 / props.sumCell
 })
 
 onMounted(() => {

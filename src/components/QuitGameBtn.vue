@@ -12,5 +12,6 @@
   width: 54px;
   height: 54px;
   margin-top: 20px;
+  z-index: 2;
 }
 </style>
