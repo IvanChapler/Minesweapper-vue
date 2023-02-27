@@ -14,7 +14,7 @@
       <div class="contacts_icons-wrapper">
         <a class="contacts_icon" href="https://github.com/IvanChapler" target="_blank"><v-icon icon="mdi-github" size="x-large"></v-icon></a>
         <a class="contacts_icon" href="mailto:ererer4646@gmail.com?subject=Question&body=Hello! ..." target="_blank"><v-icon icon="mdi-gmail" size="x-large"></v-icon></a>
-        <a class="contacts_icon" href="https://t.me/Tsukoumi" target="_blank"><v-icon icon="mdi-send" size="x-large"></v-icon></a>
+        <a class="contacts_icon" href="https://t.me/Tsukoumi" target="_blank"><v-icon icon="mdi-send" size="large"></v-icon></a>
       </div>
     </v-col>
   </v-row>

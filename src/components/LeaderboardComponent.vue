@@ -7,8 +7,10 @@
         <th class="text-left">
           Name
         </th>
-        <th class="text-left">
+        <th class="text-center pl-0 pr-10">
           Score
+        </th>
+        <th class="text-left">
         </th>
       </tr>
       </thead>
@@ -16,7 +18,8 @@
       <tbody>
       <tr v-for="(user, i) of leaderboard" :key="i">
         <td>{{ user.username }}</td>
-        <td>{{ user.score }}</td>
+        <td class="text-center pl-0 pr-10" width="130px">{{ user.score }}</td>
+        <td @click="deleteListItem(i)" class="pl-0 pr-8" style="width: 40px"><v-icon icon="mdi-close" class="icon-close"></v-icon></td>
       </tr>
       </tbody>
     </v-table>
@@ -34,11 +37,19 @@ const leaderboard = computed(() => {
   return store.getters.filteredLeaderboard
 })
 
+function deleteListItem (i) {
+  store.commit('deleteScore', {index: i})
+  store.commit('addScoreToLocalStorage')
+}
+
 onMounted(() => {
   store.commit('loadScoreFromLocalStorage')
 })
 </script>
 
 <style scoped>
-
+.icon-close:hover {
+  color: #535353;
+  cursor: pointer;
+}
 </style>

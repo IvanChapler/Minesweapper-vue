@@ -29,6 +29,8 @@ function defineLoseOrWin (result) {
 function startGame (num) {
   sumCell.value = num
   isGameStart.value = true
+
+  window.localStorage.setItem('selected-username', JSON.stringify(username.value))
 }
 
 function restartGame () {
@@ -40,6 +42,13 @@ function quitGame () {
   isGameStart.value = false
 }
 
+onMounted(() => {
+  const dataSelectedUsername = window.localStorage.getItem('selected-username')
+
+  if (dataSelectedUsername) {
+    username.value = JSON.parse(dataSelectedUsername)
+  }
+})
 </script>
 
 <template>
@@ -52,7 +61,7 @@ function quitGame () {
         </v-row>
 
         <v-row class="mt-8">
-          <v-btn @click="startGame(2), timeAmount = 10" rounded="pill" color="teal-lighten-1" class="choice-interface_element">Easy (4x4)</v-btn>
+          <v-btn @click="startGame(2), timeAmount = 100" rounded="pill" color="teal-lighten-1" class="choice-interface_element">Easy (4x4)</v-btn>
           <v-btn @click="startGame(8), timeAmount = 40" rounded="pill" color="orange-lighten-1" class="ml-4 mr-4 choice-interface_element">Medium (8x8)</v-btn>
           <v-btn @click="startGame(16), timeAmount = 100" rounded="pill" color="red-darken-2" class="choice-interface_element">Hard (16x16)</v-btn>
         </v-row>

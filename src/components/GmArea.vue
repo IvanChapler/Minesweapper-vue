@@ -126,7 +126,6 @@ function setFlag(i, event) {
 
   if(mask.value[i] === maskStates.question) {
     mask.value[i] = maskStates.fill
-    flags.value++
   }
   else if(mask.value[i] === maskStates.flag) {
     mask.value[i] = maskStates.question
@@ -190,6 +189,7 @@ function openCell (i, event) {
     else lose()
   }
 
+  checkWin()
 }
 
 const sizeCell = computed(() => {

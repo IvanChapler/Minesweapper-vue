@@ -32,6 +32,9 @@ const store = createStore({
             if (dataLeaderboard) {
                 state.leaderboard = JSON.parse(dataLeaderboard)
             }
+        },
+        deleteScore: (state, payload) => {
+            state.leaderboard.splice(payload.index, 1)
         }
     },
     getters: {
