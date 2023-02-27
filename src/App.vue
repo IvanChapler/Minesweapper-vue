@@ -3,11 +3,13 @@ import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import AddHeader from "./components/AddHeader.vue";
 import GameComponent from "./components/GameComponent.vue";
 import LeaderboardComponent from "./components/LeaderboardComponent.vue";
+import ContactsComponent from "./components/ContactsComponent.vue";
 import NotFound from "./components/NotFoundComponent.vue";
 
 const routes = {
   '/': GameComponent,
   '/leaderboard': LeaderboardComponent,
+  '/contacts': ContactsComponent,
 }
 
 const currentPath = ref(window.location.hash);

@@ -96,7 +96,11 @@ function lose() {
 function win() {
   emit('resultGame', 'win');
 
-
+  store.commit('increaseScore', {
+    username: (props.userName) ? props.userName : 'You',
+    score: calculateScore()
+  })
+  store.commit('addScoreToLocalStorage')
 }
 
 function checkWin () {
@@ -137,13 +141,6 @@ function setFlag(i, event) {
 }
 
 function openCell (i, event) {
-  const smp = props.userName
-  store.commit('increaseScore', {
-    username: (smp) ? smp : 'You',
-    score: calculateScore()
-  })
-  store.commit('addScoreToLocalStorage')
-
   const fieldSide = props.sumCell;
 
   const mnojitel = Math.floor(i / fieldSide)
