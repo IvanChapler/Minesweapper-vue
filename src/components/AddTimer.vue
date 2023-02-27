@@ -18,6 +18,7 @@ function emitFunction (value) {
 
 onMounted(() => {
   time.value = props.timeAmount
+  emitFunction(time.value)
 
   const timerId = setInterval(() => {
     time.value -= 1

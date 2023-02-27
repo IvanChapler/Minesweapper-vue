@@ -1,5 +1,5 @@
 <template>
-  <side-menu v-if="menuShow" @click.stop/>
+  <side-menu v-show="menuShow" @click.stop/>
   <header>
     <v-row align="end" class="side-menu">
       <v-col cols="1">

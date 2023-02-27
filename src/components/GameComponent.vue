@@ -4,7 +4,7 @@ import AddHeader from "./AddHeader.vue";
 import GmArea from "./GmArea.vue";
 import RestartGameBtn from "./RestartGameBtn.vue";
 import QuitGameBtn from "./QuitGameBtn.vue";
-import GameOverOverlay from "./GameOverOverlay.vue"
+import GameOverOverlay from "./GameOverOverlay.vue";
 
 const sumCell = ref(0);
 const isGameStart = ref(false);
@@ -12,8 +12,8 @@ const isGameRestart = ref(true);
 const timeAmount = ref(0);
 const overlayVisible = ref(false);
 const gameResult = ref('');
-const inputHardDifference = ref('')
-const validateRules = ref([function () { if(isNaN(+inputHardDifference.value)){return 'Введите число клеток по оси!'} else {return true} }]);
+const username = ref('');
+const validateRules = ref();
 
 function defineLoseOrWin (result) {
   if (result === 'lose') {
@@ -56,9 +56,9 @@ function quitGame () {
           <v-btn @click="startGame(8), timeAmount = 40" rounded="pill" color="orange-lighten-1" class="ml-4 mr-4 choice-interface_element">Medium (8x8)</v-btn>
           <v-btn @click="startGame(16), timeAmount = 100" rounded="pill" color="red-darken-2" class="choice-interface_element">Hard (16x16)</v-btn>
         </v-row>
-        <v-row justify="center" class="mt-5">or</v-row>
+        <v-row justify="center" class="mt-5">and</v-row>
         <v-row justify="center" class="mt-5">
-          <v-text-field @keydown.enter="startGame(+inputHardDifference)" v-model="inputHardDifference" label="Your size" :rules="validateRules">
+          <v-text-field v-model="username" label="Select nick" :rules="validateRules">
           </v-text-field>
         </v-row>
       </div>
@@ -70,7 +70,7 @@ function quitGame () {
     </div>
 
     <div v-if="isGameStart">
-      <gm-area v-if="isGameRestart" @result-game="defineLoseOrWin" :sumCell="sumCell" :timeAmount="timeAmount">
+      <gm-area v-if="isGameRestart" @result-game="defineLoseOrWin" :sumCell="sumCell" :timeAmount="timeAmount" :userName="username">
         <template v-slot:overlay>
           <game-over-overlay v-if="overlayVisible" :result="gameResult">
             <restart-game-btn @click="restartGame(), overlayVisible = false"/>

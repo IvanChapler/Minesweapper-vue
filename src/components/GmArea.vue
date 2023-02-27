@@ -45,15 +45,16 @@
 import {ref, onMounted, computed, defineProps, defineEmits, reactive, watch, onUpdated } from "vue";
 import { createField, Bomb } from "./gameAlgorhitm.js";
 import AddTimer from "./AddTimer.vue";
-import GameOverOverlay from "./GameOverOverlay.vue";
+import { useStore } from "vuex"
 
-const props = defineProps(['sumCell', 'timeAmount']);
+const props = defineProps(['sumCell', 'timeAmount', 'userName']);
 const emit = defineEmits(['resultGame'])
 const field = ref(new Array(props.sumCell*props.sumCell));
 const isFirstOpenedField = ref(true);
 const flags = ref(props.sumCell);
 const time = ref(0);
 const mask = ref([]);
+const store = useStore();
 const maskStates = reactive({
   transparent: '',
   fill: ' ',
@@ -61,6 +62,10 @@ const maskStates = reactive({
   question: 'mdi-help',
 });
 
+
+function calculateScore() {
+  return 10 * time.value
+}
 
 function calculateTime(emitValue) {
   time.value = emitValue
@@ -89,7 +94,9 @@ function lose() {
 }
 
 function win() {
-  emit('resultGame', 'win')
+  emit('resultGame', 'win');
+
+
 }
 
 function checkWin () {
@@ -130,6 +137,12 @@ function setFlag(i, event) {
 }
 
 function openCell (i, event) {
+  const smp = props.userName
+  store.commit('increaseScore', {
+    username: (smp) ? smp : 'You',
+    score: calculateScore()
+  })
+  store.commit('addScoreToLocalStorage')
 
   const fieldSide = props.sumCell;
 
