@@ -12,7 +12,9 @@
 <script setup>
 import { defineProps } from "vue";
 
-const props = defineProps(['result'])
+const props = defineProps({
+  result: { type: String, default: undefined}
+});
 </script>
 
 <style scoped>
@@ -32,7 +34,7 @@ const props = defineProps(['result'])
   align-items: center;
   justify-content: center;
   background: rgba(69, 68, 68, 0.53);
-  z-index: 10;
+  z-index: 9;
 }
 .overlay_modal {
   width: 250px;
